@@ -67,6 +67,9 @@ def get_formatted_logger(level: str) -> logging.Logger:
 
 
 class Sorting_Help_Formatter(argparse.HelpFormatter):
+    """
+    Formatter for sorting argument options alphabetically
+    """
     # source: https://stackoverflow.com/a/12269143
     def add_arguments(self, actions: Iterable[argparse.Action]) -> None:
         actions = sorted(actions, key=attrgetter('option_strings'))

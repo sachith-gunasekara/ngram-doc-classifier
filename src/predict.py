@@ -74,8 +74,9 @@ def main(args: argparse.Namespace) -> None:
     report = classification_report(labels, predictions, output_dict=True)
 
     # dump classification report
-    report_path = os.path.join(args.models_directory,
-                               "classification_report.json")
+    report_path = os.path.join(
+        args.models_directory, "classification_report_%s_%s.json" %
+        (ngrams, model["config"]["ngram_cutoff"]))
     LOGGER.info("Dumping classification report: %s" % report_path)
     with open(report_path, "w") as output_file_stream:
         json.dump(report, output_file_stream)
