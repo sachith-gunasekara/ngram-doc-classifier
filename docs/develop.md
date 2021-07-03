@@ -6,32 +6,27 @@
 
 ### Tasks
 
-1.  Codebase
+1.  Prediction
 
-    1.  set up repository with hooks and data set grabbing
+    1.  **TODO** add two separate inputs for predicting on
+        test and on new file, with --evaluate flag
 
-    2.  data-set:
-        <https://www.analyticsvidhya.com/blog/2021/03/language-detection-using-natural-language-processing/>
+    2.  **TODO** add edge case in case no language is
+        detected for all zeros -\> then it should show a warning and
+        default to something for evaluation protocols
 
-    3.  or larger data set: <https://zenodo.org/record/841984>
+2.  Coding style
 
-    4.  n-grams: <http://cloudmark.github.io/Language-Detection/>
+    1.  add nice bash scripts for all functions
 
-    5.  can use bigram or trigram approach but will not work so well on
-        short phrases
+    2.  n-grams: <http://cloudmark.github.io/Language-Detection/>
 
-    6.  check if out of place error is the same as normalized vector
-        difference norm, but show it empirically can work
-
-    7.  can use numpy and sklearn for basic operations such as vector
-        comparisons and accuracy/f1 scores
-
-2.  Presentation
+3.  Presentation
 
     1.  prepare 5 slides within 15 minutes for HSLU interview
 
     2.  motivate structure of language with basic commentary and how
-        this works
+        this works -\> find citations
 
     3.  mention older articles use data more wisely -\> eg. of BPE paper
         from before
@@ -47,3 +42,6 @@
 
     7.  heavy solution could also be a large word level vocabulary which
         can handle everything -\> would actually be ideal if possible
+
+    8.  skip punctuation removal -\> explain why it might be problematic
+        for different languages
