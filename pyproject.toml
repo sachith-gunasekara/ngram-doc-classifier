@@ -7,9 +7,13 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-numpy = "^1.21.0"
+tqdm = "^4.61.1"
+scikit-learn = "^0.24.2"
 
 [tool.poetry.dev-dependencies]
+ipdb = "^0.13.9"
+mypy = "^0.910"
+snakeviz = "^2.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
