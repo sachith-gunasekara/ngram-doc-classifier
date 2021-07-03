@@ -13,11 +13,11 @@ import json
 import os
 
 
-def get_all_diff_norms(counter: typing.Counter,
-                       model: dict) -> List[Tuple[str, float]]:
+def get_diff_norms(counter: typing.Counter,
+                   model: dict) -> List[Tuple[str, float]]:
     """ Compute all distance norms for a given document counter """
     # define list for storage
-    all_diff_norms = []
+    diff_norms = []
 
     # loop across all languages for comparison
     for lang in model["profiles"].keys():
@@ -33,10 +33,10 @@ def get_all_diff_norms(counter: typing.Counter,
                 sum([(doc_score - lang_score)**2
                      for doc_score, lang_score in zip(doc_vector, lang_vector)
                      ]))
-            all_diff_norms.append((lang, distance))
+            diff_norms.append((lang, distance))
 
     # return final list
-    return all_diff_norms
+    return diff_norms
 
 
 def main(args: argparse.Namespace) -> None:
@@ -64,7 +64,7 @@ def main(args: argparse.Namespace) -> None:
         counter = get_ngram_stats(doc, ngrams)
 
         # compute closest language
-        diff_norms = get_all_diff_norms(counter, model)
+        diff_norms = get_diff_norms(counter, model)
         if diff_norms != []:
             predictions.append(sorted(diff_norms, key=lambda x: x[1])[0][0])
         else:
