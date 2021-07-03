@@ -22,7 +22,7 @@ def get_diff_norms(counter: typing.Counter,
     # loop across all languages for comparison
     for lang in model["profiles"].keys():
         doc_vector = [
-            counter[key] if key in counter else 0
+            float(counter[key]) if key in counter else 0.
             for key in model["profiles"][lang].keys()
         ]
         doc_sum = sum(doc_vector)

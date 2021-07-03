@@ -55,7 +55,7 @@ def get_ngram_stats(doc: str, n: int) -> typing.Counter:
     doc = doc.split()
 
     # initialize counter
-    counter = Counter()
+    counter: typing.Counter = Counter()
 
     # iterate over characters in words
     for word in doc:
@@ -86,7 +86,7 @@ def main(args: argparse.Namespace) -> None:
     unique_labels, indices_by_language = get_indices_by_language(labels)
 
     # create model and fill with metadata
-    model = {}
+    model: dict = {}
     model["config"] = {}
     model["profiles"] = {}
     model["config"]["ngrams"] = args.ngrams
