@@ -141,7 +141,7 @@ if __name__ == '__main__':
                         help="Directory to dump models")
     parser.add_argument("--ngrams",
                         type=int,
-                        default=2,
+                        default=3,
                         help="N-grams to use for language profiles")
     parser.add_argument("--ngram-cutoff",
                         type=int,
