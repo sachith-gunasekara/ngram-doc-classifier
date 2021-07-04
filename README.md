@@ -173,3 +173,6 @@ $ python3 -m src.predict --predict-data /path/to/document
   year={2018}
 }
 ```
+
+<!--  LocalWords:  Cavnar Trenkle WiLI neckbeard typecheck
+ -->
