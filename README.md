@@ -1,6 +1,6 @@
 # language-detection
 
-This repository provides a workflow for language detection using a character n-gram language profiling technique from Cavnar and Trenkle (1994). The WiLI-2018 language identification data set (235 languages) is used for both training and evaluation. Our best language detection model achieved a F<sub>1</sub> score of 89.8% on the WiLI-2018 test set.
+This repository provides a workflow for language detection using a character n-gram language profiling technique from Cavnar and Trenkle (1994). The WiLI-2018 language identification data set (235 languages) is used for both training and evaluation. Our best language detection model achieved a weighted F<sub>1</sub> score of 89.8% on the WiLI-2018 test set.
 
 ## Dependencies :neckbeard:
 
@@ -96,7 +96,7 @@ To evaluate the default language detection model, simply execute:
 $ python3 -m src.evaluate
 ```
 
-This will dump a classification report into the directory specified in `--model-directory`.
+This will dump a classification report into the directory specified in `--models-directory`.
 
 **Note:** The classification report for our default model is already provided in the `./models` directory
 
@@ -146,7 +146,7 @@ $ python3 -m src.predict --predict-data /path/to/document
     ```
     $ bash scripts/test_typecheck.sh
     ```
-    
+
 2. To test our default model on some sample data, execute the following:
 
     ```
