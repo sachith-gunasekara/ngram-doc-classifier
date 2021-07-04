@@ -1,49 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from math import sqrt
 from tqdm import tqdm
-from typing import List, Tuple
-from .utils import ArgparseFormatter, file_path, dir_path, get_formatted_logger
-from .train import read_data, get_clean_doc, get_ngram_stats
-from sklearn.metrics import classification_report
+from .utils import ArgparseFormatter, file_path, get_formatted_logger
+from .train import get_clean_doc, get_ngram_stats
+from .evaluate import get_diff_norms
 import argparse
-import typing
 import json
-import os
-
-
-def get_diff_norms(counter: typing.Counter,
-                   model: dict) -> List[Tuple[str, float]]:
-    """ Compute all distance norms for a given document counter """
-    # define list for storage
-    diff_norms = []
-
-    # loop across all languages for comparison
-    for lang in model["profiles"].keys():
-        doc_vector = [
-            float(counter[key]) if key in counter else 0.
-            for key in model["profiles"][lang].keys()
-        ]
-        doc_sum = sum(doc_vector)
-        if doc_sum:
-            doc_vector = [doc_score / doc_sum for doc_score in doc_vector]
-            lang_vector = list(model["profiles"][lang].values())
-            distance = sqrt(
-                sum([(doc_score - lang_score)**2
-                     for doc_score, lang_score in zip(doc_vector, lang_vector)
-                     ]))
-            diff_norms.append((lang, distance))
-
-    # return final list
-    return diff_norms
 
 
 def main(args: argparse.Namespace) -> None:
-    """ Main workflow to compute language profiles """
+    """ Main workflow to detect languages """
     # read in data and labels to memory
     LOGGER.info("Reading data from disk")
-    data, labels = read_data(args.test_data, args.test_labels)
+    with open(args.predict_data, "r") as input_file_stream:
+        data = [line.strip() for line in input_file_stream]
 
     # read model into memory
     LOGGER.info("Reading model: %s" % args.model)
@@ -68,38 +39,25 @@ def main(args: argparse.Namespace) -> None:
         if diff_norms != []:
             predictions.append(sorted(diff_norms, key=lambda x: x[1])[0][0])
         else:
-            predictions.append("UNK")
+            predictions.append("Unkown")
 
-    # produce classification report
-    report = classification_report(labels, predictions, output_dict=True)
-
-    # dump classification report
-    report_path = os.path.join(
-        args.models_directory, "classification_report_%s_%s.json" %
-        (ngrams, model["config"]["ngram_cutoff"]))
-    LOGGER.info("Dumping classification report: %s" % report_path)
-    with open(report_path, "w") as output_file_stream:
-        json.dump(report, output_file_stream)
+    # print final results
+    for doc, prediction in zip(data, predictions):
+        print("Document: %s" % doc)
+        print("Language: %s" % prediction)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=ArgparseFormatter)
+    required = parser.add_argument_group('required arguments')
+    required.add_argument("--predict-data",
+                          type=file_path,
+                          required=True,
+                          help="Path to prediction data")
     parser.add_argument("--model",
                         type=file_path,
-                        default="./models/model_2_300.json",
+                        default="./models/model_3_300.json",
                         help="Path to model JSON file")
-    parser.add_argument("--test-data",
-                        type=file_path,
-                        default="./data/wili-2018/x_test.txt",
-                        help="Path to test data")
-    parser.add_argument("--test-labels",
-                        type=file_path,
-                        default="./data/wili-2018/y_test.txt",
-                        help="Path to test labels")
-    parser.add_argument("--models-directory",
-                        type=dir_path,
-                        default="./models",
-                        help="Directory to dump models")
     parser.add_argument(
         "--logging-level",
         help="Set logging level",

@@ -138,15 +138,15 @@ if __name__ == '__main__':
     parser.add_argument("--models-directory",
                         type=dir_path,
                         default="./models",
-                        help="Directory to dump models")
+                        help="Directory to dump models and logs")
     parser.add_argument("--ngrams",
                         type=int,
                         default=3,
-                        help="N-grams to use for language profiles")
+                        help="Character n-grams to use for language profiles")
     parser.add_argument("--ngram-cutoff",
                         type=int,
                         default=300,
-                        help="Maximum n-grams per language profile")
+                        help="Maximum character n-grams per language profile")
     parser.add_argument(
         "--logging-level",
         help="Set logging level",
