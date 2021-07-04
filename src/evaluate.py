@@ -86,7 +86,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=ArgparseFormatter)
     parser.add_argument("--model",
                         type=file_path,
-                        default="./models/model_2_300.json",
+                        default="./models/model_3_300.json",
                         help="Path to model JSON file")
     parser.add_argument("--test-data",
                         type=file_path,

@@ -43,8 +43,7 @@ def main(args: argparse.Namespace) -> None:
 
     # print final results
     for doc, prediction in zip(data, predictions):
-        print("Document: %s" % doc)
-        print("Language: %s" % prediction)
+        print("%s" % prediction)
 
 
 if __name__ == '__main__':
