@@ -13,9 +13,7 @@ FORMAT = (
 
 
 def dir_path(path: str) -> str:
-    """
-    Argparse type helper to ensure directory exists
-    """
+    """ Argparse type helper to ensure directory exists """
     if os.path.isdir(path):
         return path
     else:
@@ -23,9 +21,7 @@ def dir_path(path: str) -> str:
 
 
 def file_path(path: str) -> str:
-    """
-    Argparse type helper to ensure file exists
-    """
+    """ Argparse type helper to ensure file exists """
     if os.path.isfile(path):
         return path
     else:
@@ -33,9 +29,7 @@ def file_path(path: str) -> str:
 
 
 def get_formatted_logger(level: str) -> logging.Logger:
-    """
-    Create a sane logger
-    """
+    """ Create a sane logger """
     # get root logger
     logger = logging.getLogger()
 
@@ -67,9 +61,8 @@ def get_formatted_logger(level: str) -> logging.Logger:
 
 
 class Sorting_Help_Formatter(argparse.HelpFormatter):
-    """
-    Formatter for sorting argument options alphabetically
-    """
+    """ Formatter for sorting argument options alphabetically """
+
     # source: https://stackoverflow.com/a/12269143
     def add_arguments(self, actions: Iterable[argparse.Action]) -> None:
         actions = sorted(actions, key=attrgetter('option_strings'))
