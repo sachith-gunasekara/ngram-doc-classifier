@@ -1,0 +1,24 @@
+# latex-related
+*.el
+*.aux
+*.bbl
+*.blg
+*.bst
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.gz
+*.toc
+*.sty
+*.bst
+*.nav
+*.xml
+*.snm
+*.zip
+*.anthology.bib
+*-blx.bib
+*.lot
+*.lof
+*.acr
+*.loa
