@@ -4,20 +4,24 @@
 
 ** Notes
 *** Tasks
-**** Prediction
-***** TODO add two separate inputs for predicting on test and on new file, with --evaluate flag
-***** TODO add edge case in case no language is detected for all zeros -> then it should show a warning and default to something for evaluation protocols
+**** Motivation
+***** structure of language with importance of morphology: https://en.wikipedia.org/wiki/Linguistics
+***** mention older articles use data more wisely -> interesting workarounds
+***** mention usage of modern techniques ommitted due to no libraries allowed -> keep things simple like in the older days
+***** mention data set used for evaluation since nothing was provided -> 235 languages with 235,000 paragraphs + balanced data set
 
-**** Coding style
-***** add nice bash scripts for all functions
-***** n-grams: http://cloudmark.github.io/Language-Detection/
-      
-**** Presentation
-***** prepare 5 slides within 15 minutes for HSLU interview
-***** motivate structure of language with basic commentary and how this works -> find citations
-***** mention older articles use data more wisely -> eg. of BPE paper from before
-***** mention usage of modern techniques ommitted due to no libraries allowed
+**** Workflow
 ***** cite and describe classical problem -> use ~Cavnar and Trenkle (1994)~
-***** them mention new NN approaches to handle short phrases where language profiles may not be built up as yet
-***** heavy solution could also be a large word level vocabulary which can handle everything -> would actually be ideal if possible      
-***** skip punctuation removal -> explain why it might be problematic for different languages
+***** mention why using words was not so easy and why character n-grams were preferred -> generalization due to morphology
+***** mention lowercasing and removal of special tokens and digits for noise removal
+***** use pseudocode to describe problem-solving process and mention hyperparameters
+***** if possible, show some examples of morphology captured which could be interesting
+
+**** Limitations and workaround
+***** problematic on short phrases due to lack of morphology profiles being built up -> new NN approaches to handle short phrases -> cite if possible
+***** heavy solution could also be a large word level vocabulary which can handle everything -> would actually be ideal if possible 
+***** mention word level strategy and challenges with non Latin scripts -> hard to split in all cases
+***** talk about efficiency and other techniques as further work
+
+**** Admin
+***** prepare maximum 5 slides within 15 minutes for HSLU interview
