@@ -120,18 +120,91 @@
 
 \begin{frame}
   \frametitle{Methodology}
+    \begin{columns}[T]
+      \begin{column}{.40\textwidth}
+        \begin{itemize}          
+          \setlength\itemsep{1.5em}
+          \uncover<1>{
+            \item Character n-gram profiling technique from \citet{cavnar1994n}
+            \item WiLI-2018 data set for 235 languages with 235,000 paragraphs
+            \citep{thoma2018wili}}
+          \uncover<2>{
+            \item \textbf{Similarities:} Data is lowercased and punctuations/special-tokens are removed
+            \item \textbf{Differences:} Use vector-based difference norm instead of
+            out-of-place distance 
+            \item \textbf{Two hyperparameters:} character n-gram length and ranked n-gram cutoff
+            }
+        \end{itemize}
+      \end{column}
+    \hfill
+    \begin{column}{.60\textwidth}
+      \captionsetup{width=5.5cm} 
+      \centering \uncovergraphics<1>[width=3cm,valign=t]{title.pdf}
+      \uncover<1>{\captionof{figure}{Excerpt from \citet{cavnar1994n}}}
+      \label{fig:title}
+      \uncovergraphics<2>[height=4.5cm,valign=t]{dataflow.pdf}
+      \uncover<2>{\captionof{figure}{Flowchart from \citet{cavnar1994n}}}
+      \label{fig:dataflow}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Results}
 
 \begin{frame}
   \frametitle{Results}
+  \uncover<1>{\begin{table}[t!]
+    \centering
+    \begin{tabular}{L{0.1\linewidth} L{0.1\linewidth} L{0.15\linewidth} L{0.15\linewidth} L{0.15\linewidth}}
+      \toprule
+      N-gram length & N-gram \qquad cutoff & Weighted Test F$_1$ & Best \qquad Language & Worst \qquad Language \\
+      \midrule
+      2 & 100 & 0.865 & Navajo & Konkani \\ 
+      2 & 300 & 0.893 & Navajo & Pampanga \\
+      3 & 100 & 0.859 & Dhivehi & Chavacano \\
+      \textbf{3} & \textbf{300} & \textbf{0.898} & Navajo & Chavacano \\
+      \bottomrule
+    \end{tabular}
+    \caption{Tabular summary of model performances; MLP from
+      \citet{thoma2018wili} achieved an accuracy of 0.883}
+    \label{tab:results}
+  \end{table}}
+
+  \uncover<2>{\begin{table}[t!]
+    \centering
+    \begin{tabular}{L{0.15\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth}}
+      \toprule
+      Language & N$_1$ & N$_2$ & N$_3$ & N$_4$ & N$_5$ \\
+      \midrule
+      English & \textit{the} & \textit{and} & \textit{ing} & \textit{ion} & \textit{ent} \\
+      Deutsch & \textit{der} & \textit{sch} & \textit{die} & \textit{ein} & \textit{che} \\
+      Italiano & \textit{del} & \textit{ell} & \textit{ent} & \textit{ion} & \textit{lla} \\
+      \bottomrule
+    \end{tabular}
+    \caption{Tabular summary of top five character trigrams with highest
+      relative frequency per language}
+    \label{tab:analysis}
+  \end{table}}
 \end{frame}
 
 \section{Discussion}
 
 \begin{frame}
   \frametitle{Discussion}
+  \begin{table}[t!]
+      \centering
+      \begin{tabular}{L{0.2\linewidth} L{0.25\linewidth} L{0.25\linewidth}}
+        \toprule
+        Gold language & Utterance & Predicted language \\
+        \midrule
+        English & \textit{What is this?} & Cantonese \\
+        Deutsch & \textit{Was ist das?} & Chavacano \\
+        Italiano & \textit{Cos'è questo?} & Asturian \\
+        \bottomrule
+      \end{tabular}
+      \caption{Examples of erroneous language detection for short phrases}
+      \label{tab:short}
+    \end{table}
 \end{frame}
 
 \section{Conclusions}
