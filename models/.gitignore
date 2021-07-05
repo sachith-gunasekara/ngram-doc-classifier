@@ -1,3 +1,4 @@
 *.json
+*.py
 !model_3_300.json
 !classification_report_3_300.json
