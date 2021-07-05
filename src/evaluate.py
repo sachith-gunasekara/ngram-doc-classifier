@@ -68,7 +68,7 @@ def main(args: argparse.Namespace) -> None:
         if diff_norms != []:
             predictions.append(sorted(diff_norms, key=lambda x: x[1])[0][0])
         else:
-            predictions.append("Unkown")
+            predictions.append("Unknown")
 
     # produce classification report
     report = classification_report(labels, predictions, output_dict=True)

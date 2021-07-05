@@ -39,7 +39,7 @@ def main(args: argparse.Namespace) -> None:
         if diff_norms != []:
             predictions.append(sorted(diff_norms, key=lambda x: x[1])[0][0])
         else:
-            predictions.append("Unkown")
+            predictions.append("Unknown")
 
     # print final results
     for doc, prediction in zip(data, predictions):
