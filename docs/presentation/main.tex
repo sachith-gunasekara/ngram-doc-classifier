@@ -111,31 +111,31 @@
     \caption{Levels/structures of languages; figure taken from \citet{hickey2005levels}}
   \end{figure}
   \uncover<3>{\begin{itemize}
-    \item Morphological profiling probably has lower data and compute requirements
-    \item Makes sense given no external libraries are allowed
-  \end{itemize}}
+      \item Morphological profiling probably has lower data and compute requirements
+      \item Makes sense given no external libraries are allowed
+    \end{itemize}}
 \end{frame}
 
 \section{Methodology}
 
 \begin{frame}
   \frametitle{Methodology}
-    \begin{columns}[T]
-      \begin{column}{.40\textwidth}
-        \begin{itemize}          
-          \setlength\itemsep{1.5em}
-          \uncover<1>{
-            \item Character n-gram profiling technique from \citet{cavnar1994n}
-            \item WiLI-2018 data set for 235 languages with 235,000 paragraphs
-            \citep{thoma2018wili}}
-          \uncover<2>{
-            \item \textbf{Similarities:} Data is lowercased and punctuations/special-tokens are removed
-            \item \textbf{Differences:} Use vector-based difference norm instead of
-            out-of-place distance 
-            \item \textbf{Two hyperparameters:} character n-gram length and ranked n-gram cutoff
-            }
-        \end{itemize}
-      \end{column}
+  \begin{columns}[T]
+    \begin{column}{.40\textwidth}
+      \begin{itemize}          
+        \setlength\itemsep{1.5em}
+        \uncover<1>{
+          \item Character n-gram profiling technique from \citet{cavnar1994n}
+          \item WiLI-2018 data set for 235 languages with 235,000 paragraphs
+          \citep{thoma2018wili}}
+        \uncover<2>{
+          \item \textbf{Similarities:} Data is lower-cased and punctuation/special-tokens are removed
+          \item \textbf{Differences:} Use vector-based difference norm instead of
+          out-of-place distance 
+          \item \textbf{Two hyperparameters:} character n-gram length and ranked n-gram cutoff
+        }
+      \end{itemize}
+    \end{column}
     \hfill
     \begin{column}{.60\textwidth}
       \captionsetup{width=5.5cm} 
@@ -154,44 +154,44 @@
 \begin{frame}
   \frametitle{Results}
   \uncover<1>{\begin{table}[t!]
-    \centering
-    \begin{tabular}{L{0.1\linewidth} L{0.1\linewidth} L{0.15\linewidth} L{0.15\linewidth} L{0.15\linewidth}}
-      \toprule
-      N-gram length & N-gram \qquad cutoff & Weighted Test F$_1$ & Best \qquad Language & Worst \qquad Language \\
-      \midrule
-      2 & 100 & 0.865 & Navajo & Konkani \\ 
-      2 & 300 & 0.893 & Navajo & Pampanga \\
-      3 & 100 & 0.859 & Dhivehi & Chavacano \\
-      \textbf{3} & \textbf{300} & \textbf{0.898} & Navajo & Chavacano \\
-      \bottomrule
-    \end{tabular}
-    \caption{Tabular summary of model performances; MLP from
-      \citet{thoma2018wili} achieved an accuracy of 0.883}
-    \label{tab:results}
-  \end{table}}
+      \centering
+      \begin{tabular}{L{0.1\linewidth} L{0.1\linewidth} L{0.15\linewidth} L{0.15\linewidth} L{0.15\linewidth}}
+        \toprule
+        N-gram length & N-gram \qquad cutoff & Weighted Test F$_1$ & Best \qquad Language & Worst \qquad Language \\
+        \midrule
+        2 & 100 & 0.865 & Navajo & Konkani \\ 
+        2 & 300 & 0.893 & Navajo & Pampanga \\
+        3 & 100 & 0.859 & Dhivehi & Chavacano \\
+        \textbf{3} & \textbf{300} & \textbf{0.898} & Navajo & Chavacano \\
+        \bottomrule
+      \end{tabular}
+      \caption{Tabular summary of model performances; MLP from
+        \citet{thoma2018wili} achieved an accuracy of 0.883}
+      \label{tab:results}
+    \end{table}}
 
   \uncover<2>{\begin{table}[t!]
-    \centering
-    \begin{tabular}{L{0.15\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth}}
-      \toprule
-      Language & N$_1$ & N$_2$ & N$_3$ & N$_4$ & N$_5$ \\
-      \midrule
-      English & \textit{the} & \textit{and} & \textit{ing} & \textit{ion} & \textit{ent} \\
-      Deutsch & \textit{der} & \textit{sch} & \textit{die} & \textit{ein} & \textit{che} \\
-      Italiano & \textit{del} & \textit{ell} & \textit{ent} & \textit{ion} & \textit{lla} \\
-      \bottomrule
-    \end{tabular}
-    \caption{Tabular summary of top five character trigrams with highest
-      relative frequency per language}
-    \label{tab:analysis}
-  \end{table}}
+      \centering
+      \begin{tabular}{L{0.15\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth} L{0.1\linewidth}}
+        \toprule
+        Language & N$_1$ & N$_2$ & N$_3$ & N$_4$ & N$_5$ \\
+        \midrule
+        English & \textit{the} & \textit{and} & \textit{ing} & \textit{ion} & \textit{ent} \\
+        Deutsch & \textit{der} & \textit{sch} & \textit{die} & \textit{ein} & \textit{che} \\
+        Italiano & \textit{del} & \textit{ell} & \textit{ent} & \textit{ion} & \textit{lla} \\
+        \bottomrule
+      \end{tabular}
+      \caption{Tabular summary of top five character trigrams with highest
+        relative frequency per language}
+      \label{tab:analysis}
+    \end{table}}
 \end{frame}
 
 \section{Discussion}
 
 \begin{frame}
   \frametitle{Discussion}
-  \begin{table}[t!]
+  \uncover<1>{\begin{table}[t!]
       \centering
       \begin{tabular}{L{0.2\linewidth} L{0.25\linewidth} L{0.25\linewidth}}
         \toprule
@@ -205,12 +205,42 @@
       \caption{Examples of erroneous language detection for short phrases}
       \label{tab:short}
     \end{table}
+
+    Plenty of failing cases: \setlength{\leftmargini}{0.5cm}
+    \begin{itemize}      
+      \setlength\itemsep{0.5em}
+      \item Short phrases where language profile cannot converge
+      \item Slang, colloquial or borrowed words
+      \item Transliteration from non-Latin to Latin script
+    \end{itemize}}
+
+  \vspace{15pt}
+  
+  \uncover<2>{
+    Plenty of workarounds: \setlength{\leftmargini}{0.5cm}
+    \begin{itemize}      
+      \setlength\itemsep{0.5em}
+      \item Word-level language identification with large-enough vocabulary
+      \item Complex modeling over sequential subwords, for example using neural
+      networks; such as in \citet{DBLP:journals/corr/abs-1708-04811}
+    \end{itemize}
+  }
 \end{frame}
 
 \section{Conclusions}
 
 \begin{frame}
   \frametitle{Conclusions}
+  \begin{itemize}    
+    \setlength\itemsep{1.5em}
+    \uncover<1>{\item Portable and lightweight character n-gram profiling technique from
+      \citet{cavnar1994n}
+      \item Trained and tested on WiLI-2018 \citep{thoma2018wili}
+      \item Best character trigram model achieved \textbf{89.8\%} weighted F$_1$ test score}
+    \uncover<2>{\item Works well for medium-long length documents, likely robust to
+      previously unseen words and spelling errors
+      \item Known limitations on short length documents} 
+  \end{itemize}
 \end{frame}
 
 \section*{Bibliography}
@@ -222,3 +252,8 @@
 \end{frame}
 
 \end{document}
+
+% LocalWords:  Cavnar Trenkle Atreya Shankar NLP WiLI hyperparameters Konkani
+% LocalWords:  Pampanga Dhivehi Chavacano MLP ing ent Deutsch der ein che del
+% LocalWords:  Italiano lla trigrams ist das Cos'è questo Asturian subwords
+% LocalWords:  trigram
