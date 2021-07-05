@@ -4,24 +4,7 @@
 
 ** Notes
 *** Tasks
-**** Motivation
-***** structure of language with importance of morphology: https://en.wikipedia.org/wiki/Linguistics
-***** mention older articles use data more wisely -> interesting workarounds
-***** mention usage of modern techniques ommitted due to no libraries allowed -> keep things simple like in the older days
-***** mention data set used for evaluation since nothing was provided -> 235 languages with 235,000 paragraphs + balanced data set
-
-**** Workflow
-***** cite and describe classical problem -> use ~Cavnar and Trenkle (1994)~
-***** mention why using words was not so easy and why character n-grams were preferred -> generalization due to morphology
-***** mention lowercasing and removal of special tokens and digits for noise removal
-***** use pseudocode to describe problem-solving process and mention hyperparameters
-***** if possible, show some examples of morphology captured which could be interesting
-
-**** Limitations and workaround
-***** problematic on short phrases due to lack of morphology profiles being built up -> new NN approaches to handle short phrases -> cite if possible
-***** heavy solution could also be a large word level vocabulary which can handle everything -> would actually be ideal if possible 
-***** mention word level strategy and challenges with non Latin scripts -> hard to split in all cases
-***** talk about efficiency and other techniques as further work
-
-**** Admin
-***** prepare maximum 5 slides within 15 minutes for HSLU interview
+**** Presentation pointers
+***** TODO do a practice run to hit 15 minutes
+***** motivation for Cavnar, Trenkle et al. -> context-dependent words, too much diversity, spelling errors, character n-grams might allow for diversity with even shorter paragraphs
+***** talk about best and worst languages -> worst ones are likley creoles
