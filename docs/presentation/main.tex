@@ -91,4 +91,61 @@
   \maketitle
 \end{frame}
 
+\begin{frame}
+  \frametitle{Overview}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Motivation}
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}
+      \setlength{\fboxsep}{1pt}
+      \node[anchor=south west,inner sep=0] at (0,0) {
+        \fbox{\includegraphics[width=9cm]{levels.png}}};
+      \draw<2->[red, thick] (3,2.2) rectangle (4.6,2.75);
+    \end{tikzpicture}
+    \caption{Levels/structures of languages; figure taken from \citet{hickey2005levels}}
+  \end{figure}
+  \uncover<3>{\begin{itemize}
+    \item Morphological profiling probably has lower data and compute requirements
+    \item Makes sense given no external libraries are allowed
+  \end{itemize}}
+\end{frame}
+
+\section{Methodology}
+
+\begin{frame}
+  \frametitle{Methodology}
+\end{frame}
+
+\section{Results}
+
+\begin{frame}
+  \frametitle{Results}
+\end{frame}
+
+\section{Discussion}
+
+\begin{frame}
+  \frametitle{Discussion}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}
+  \frametitle{Conclusions}
+\end{frame}
+
+\section*{Bibliography}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Bibliography}
+  \nocite{*}
+  \printbibliography[title = {Bibliography}, heading=none]
+\end{frame}
+
 \end{document}
