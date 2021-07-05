@@ -1,6 +1,6 @@
 # language-detection
 
-This repository provides a workflow for language detection using a character n-gram language profiling technique from Cavnar and Trenkle (1994). The WiLI-2018 language identification data set (235 languages) is used for both training and evaluation. Our best language detection model achieved a weighted F<sub>1</sub> score of 89.8% on the WiLI-2018 test set.
+This repository provides a workflow for language detection using a character n-gram language profiling technique from Cavnar and Trenkle (1994). The WiLI-2018 language identification data set (235 languages) is used for both training and evaluation. Our best language detection model achieved a weighted F<sub>1</sub> score of 89.8% on the WiLI-2018 test set. A presentation summarizing this project can be found [here](./docs/presentation/main.pdf).
 
 ## Dependencies :neckbeard:
 
