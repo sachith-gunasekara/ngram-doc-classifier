@@ -155,14 +155,14 @@
   \frametitle{Results}
   \uncover<1>{\begin{table}[t!]
       \centering
-      \begin{tabular}{L{0.1\linewidth} L{0.1\linewidth} L{0.15\linewidth} L{0.15\linewidth} L{0.15\linewidth}}
+      \begin{tabular}{L{0.1\linewidth} L{0.1\linewidth} L{0.15\linewidth} L{0.2\linewidth} L{0.25\linewidth}}
         \toprule
-        N-gram length & N-gram \qquad cutoff & Weighted Test F$_1$ & Best \qquad Language & Worst \qquad Language \\
+        N-gram length & N-gram \qquad cutoff & Weighted test F$_1$ & Best performing \qquad language & Worst performing \qquad \qquad language \\
         \midrule
-        2 & 100 & 0.865 & Navajo & Konkani \\ 
-        2 & 300 & 0.893 & Navajo & Pampanga \\
-        3 & 100 & 0.859 & Dhivehi & Chavacano \\
-        \textbf{3} & \textbf{300} & \textbf{0.898} & Navajo & Chavacano \\
+        2 & 100 & 0.865 & Navajo (0.999) & Konkani (0.110) \\ 
+        2 & 300 & 0.893 & Navajo (0.999) & Pampanga (0.235) \\
+        3 & 100 & 0.859 & Dhivehi (0.999) & Chavacano (0.247) \\
+        \textbf{3} & \textbf{300} & \textbf{0.898} & Navajo (0.999) & Chavacano (0.304) \\
         \bottomrule
       \end{tabular}
       \caption{Tabular summary of model performances; MLP from
