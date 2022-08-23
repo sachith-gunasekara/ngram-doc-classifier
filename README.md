@@ -26,7 +26,7 @@ $ pip install -r requirements.txt
 
 ## Usage :snowflake:
 
-<details><summary><b>i. Training</b></summary>
+<details><summary>i. Training</summary>
 <p>
 
 ```
@@ -66,7 +66,7 @@ $ python3 -m src.train
 </p>
 </details>
 
-<details><summary><b>ii. Evaluation</b></summary>
+<details><summary>ii. Evaluation</summary>
 <p>
 
 ```
@@ -103,7 +103,7 @@ This will dump a classification report into the directory specified in `--models
 </p>
 </details>
 
-<details><summary><b>iii. Prediction</b></summary>
+<details><summary>iii. Prediction</summary>
 <p>
 
 ```
