@@ -14,15 +14,15 @@ $ pip install -r requirements.txt
 
 1. Automatically download and prepare the WiLI-2018 [data set](https://zenodo.org/record/841984):
 
-    ```
-    $ bash scripts/prepare_data.sh
-    ```
+   ```
+   $ bash scripts/prepare_data.sh
+   ```
 
 2. **Optional:** Initialize git hooks to manage development workflows such as linting shell scripts, keeping python dependencies up-to-date and formatting the development log:
 
-    ```
-    $ bash scripts/prepare_git_hooks.sh
-    ```
+   ```
+   $ bash scripts/prepare_git_hooks.sh
+   ```
 
 ## Usage :snowflake:
 
@@ -32,7 +32,7 @@ $ pip install -r requirements.txt
 ```
 usage: train.py [-h] [--logging-level {debug,info,warning,error,critical}]
                 [--models-directory <dir_path>] [--ngram-cutoff <int>]
-                [--ngrams <int>] [--train-data <file_path>]
+                [--ngrams <int>] [--ngram-method <str>] [--ngram-token <str>] [--train-data <file_path>]
                 [--train-labels <file_path>]
 
 optional arguments:
@@ -44,8 +44,12 @@ optional arguments:
                       Maximum character n-grams per language profile (default:
                       300)
   --ngrams            <int>
-                      Character n-grams to use for language profiles (default:
+                      N-grams to use for language profiles (default:
                       3)
+  --ngram-method      <str>
+                      Method to use for creating n-gram profiles: Split sentences or not. (default: normal)
+  --ngram-token       <str>
+                      Token to be considered when creating ngram profiles
   --train-data        <file_path>
                       Path to training data (default:
                       ./data/wili-2018/x_train.txt)
@@ -143,15 +147,15 @@ $ python3 -m src.predict --predict-data /path/to/document
 
 1. To run a `mypy` typecheck on our source code, execute:
 
-    ```
-    $ bash scripts/test_typecheck.sh
-    ```
+   ```
+   $ bash scripts/test_typecheck.sh
+   ```
 
 2. To test our default model on some sample data, execute the following:
 
-    ```
-    $ python3 -m src.predict --predict-data test/input.txt
-    ```
+   ```
+   $ python3 -m src.predict --predict-data test/input.txt
+   ```
 
 ## References :book:
 
