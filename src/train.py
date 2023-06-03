@@ -119,18 +119,6 @@ def get_ngram_stats(
                 for index in range(len(words) - ngrams + 1):
                     counter += Counter([" ".join(words[index : index + ngrams])])
 
-        elif ngram_token == "char":
-            # clean doc
-            doc = get_clean_doc(doc)
-            # tokenize document by words
-            doc = word_tokenize(doc)
-
-            # iterate over characters in words
-            for word in doc:
-                counter += Counter(
-                    [word[i : i + ngrams] for i in range(len(word) - ngrams + 1)]
-                )
-
         elif ngram_token == "char_wb":
             # tokenize into sentences
             doc = sent_tokenize(doc)
@@ -171,10 +159,11 @@ def get_normalized_profile(
 def main(args: argparse.Namespace) -> None:
     """Main workflow to compute category profiles"""
     # read in data and labels to memory
-    LOGGER.info("Reading data from disk")
+    LOGGER.info("Reading data")
     data, labels = read_data_from_dataloader(
         fetch_20newsgroups, subset="train", remove=("headers", "footers", "quotes")
     )
+    # data, labels = read_data_from_path(args.train_data, args.train_labels)
 
     # get unique labels and indices
     LOGGER.info("Computing category indices")
@@ -270,7 +259,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--ngram-token",
         type=str,
-        default="char",
+        default="char_wb",
         choices=["word", "char", "char_wb"],
         help="Define the token considered to build n-gram profile",
     )

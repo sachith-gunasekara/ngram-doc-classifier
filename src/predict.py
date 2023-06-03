@@ -10,7 +10,7 @@ import json
 
 
 def main(args: argparse.Namespace) -> None:
-    """ Main workflow to detect languages """
+    """Main workflow to detect categories"""
     # read in data and labels to memory
     LOGGER.info("Reading data from disk")
     with open(args.predict_data, "r") as input_file_stream:
@@ -25,8 +25,8 @@ def main(args: argparse.Namespace) -> None:
     ngrams = model["config"]["ngrams"]
     predictions = []
 
-    # iterate over all languages and update dictionary
-    LOGGER.info("Detecting languages sequentially")
+    # iterate over all categories and update dictionary
+    LOGGER.info("Detecting categories sequentially")
     for doc in tqdm(data):
         # clean document
         doc = get_clean_doc(doc)
@@ -34,7 +34,7 @@ def main(args: argparse.Namespace) -> None:
         # compute n-gram statistics and update counter
         counter = get_ngram_stats(doc, ngrams)
 
-        # compute closest language
+        # compute closest category
         diff_norms = get_diff_norms(counter, model)
         if diff_norms != []:
             predictions.append(sorted(diff_norms, key=lambda x: x[1])[0][0])
@@ -46,22 +46,24 @@ def main(args: argparse.Namespace) -> None:
         print("%s" % prediction)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=ArgparseFormatter)
-    required = parser.add_argument_group('required arguments')
-    required.add_argument("--predict-data",
-                          type=file_path,
-                          required=True,
-                          help="Path to prediction data")
-    parser.add_argument("--model",
-                        type=file_path,
-                        default="./models/model_3_300.json",
-                        help="Path to model JSON file")
+    required = parser.add_argument_group("required arguments")
+    required.add_argument(
+        "--predict-data", type=file_path, required=True, help="Path to prediction data"
+    )
+    parser.add_argument(
+        "--model",
+        type=file_path,
+        default="./models/model_3_300.json",
+        help="Path to model JSON file",
+    )
     parser.add_argument(
         "--logging-level",
         help="Set logging level",
         choices=["debug", "info", "warning", "error", "critical"],
         default="info",
-        type=str)
+        type=str,
+    )
     LOGGER = get_formatted_logger(parser.parse_known_args()[0].logging_level)
     main(parser.parse_args())
