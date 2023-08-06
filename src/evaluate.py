@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from math import sqrt
+import numpy as np
+from numpy import dot
+from numpy.linalg import norm
 from tqdm import tqdm
 from typing import List, Tuple
 from sklearn.metrics import classification_report
@@ -19,11 +22,28 @@ import os
 from sklearn.datasets import fetch_20newsgroups
 
 
-# def get_distance(counter: typing.Counter, model: dict):
-#     """Compute all distances with given distance measure"""
-#     distances = []
+def euclidean_distance(doc_vector: typing.List, cat_vector: typing.List):
+    """
+    Compute Euclidean distance between a document and category profile
+    """
+    doc_vector = np.array(doc_vector)
+    cat_vector = np.array(cat_vector)
 
-#     for lang in model["profiles"].keys()
+    distance = norm(doc_vector - cat_vector)
+
+    return distance
+
+
+def cosine_similarity(doc_vector: typing.List, cat_vector: typing.List):
+    """
+    Compute Cosine similarity between a document and category profile
+    """
+    doc_vector = np.array(doc_vector)
+    cat_vector = np.array(cat_vector)
+
+    similarity = dot(doc_vector, cat_vector) / (norm(doc_vector) * norm(cat_vector))
+
+    return similarity
 
 
 def get_diff_norms(counter: typing.Counter, model: dict) -> List[Tuple[str, float]]:
@@ -31,25 +51,18 @@ def get_diff_norms(counter: typing.Counter, model: dict) -> List[Tuple[str, floa
     # define list for storage
     diff_norms = []
 
-    # loop across all languages for comparison
-    for lang in model["profiles"].keys():
+    # loop across all categories for comparison
+    for cat in model["profiles"].keys():
         doc_vector = [
             float(counter[key]) if key in counter else 0.0
-            for key in model["profiles"][lang].keys()
+            for key in model["profiles"][cat].keys()
         ]
         doc_sum = sum(doc_vector)
         if doc_sum:
             doc_vector = [doc_score / doc_sum for doc_score in doc_vector]
-            lang_vector = list(model["profiles"][lang].values())
-            distance = sqrt(
-                sum(
-                    [
-                        (doc_score - lang_score) ** 2
-                        for doc_score, lang_score in zip(doc_vector, lang_vector)
-                    ]
-                )
-            )
-            diff_norms.append((lang, distance))
+            cat_vector = list(model["profiles"][cat].values())
+            distance = euclidean_distance(doc_vector, cat_vector)
+            diff_norms.append((cat, distance))
     # return final list
     return diff_norms
 
@@ -69,7 +82,8 @@ def main(args: argparse.Namespace) -> None:
         model = json.load(input_file_stream)
 
     # extract model-specific parameters
-    ngrams = model["config"]["ngrams"]
+    ngrams_start = model["config"]["ngrams_start"]
+    ngrams_end = model["config"]["ngrams_end"]
     ngram_method = model["config"]["ngram_method"]
     ngram_token = model["config"]["ngram_token"]
     predictions = []
@@ -78,7 +92,9 @@ def main(args: argparse.Namespace) -> None:
     LOGGER.info("Detecting categories sequentially, this might take some time")
     for doc in tqdm(data):
         # compute n-gram statistics and update counter
-        counter = get_ngram_stats(doc, ngrams, ngram_method, ngram_token)
+        counter = get_ngram_stats(
+            doc, ngrams_start, ngrams_end, ngram_method, ngram_token
+        )
 
         # compute closest category
         diff_norms = get_diff_norms(counter, model)
@@ -93,8 +109,15 @@ def main(args: argparse.Namespace) -> None:
     report_path = os.path.join(
         args.models_directory,
         "reports",
-        "classification_report_%s_%s_%s_%s.json"
-        % (ngrams, model["config"]["ngram_cutoff"], ngram_method, ngram_token),
+        "euclidean",
+        "classification_report_%s_to_%s_%s_%s_%s.json"
+        % (
+            ngrams_start,
+            ngrams_end,
+            model["config"]["ngram_cutoff"],
+            ngram_method,
+            ngram_token,
+        ),
     )
 
     # dump classification report
@@ -108,7 +131,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=file_path,
-        default="./models/model_3_300_normal_char.json",
+        default="./models/euclidean/model_3_300_normal_char.json",
         help="Path to model JSON file",
     )
     parser.add_argument(

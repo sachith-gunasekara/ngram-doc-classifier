@@ -22,7 +22,8 @@ def main(args: argparse.Namespace) -> None:
         model = json.load(input_file_stream)
 
     # extract model-specific parameters
-    ngrams = model["config"]["ngrams"]
+    ngrams_start = model["config"]["ngrams_start"]
+    ngrams_end = model["config"]["ngrams_end"]
     predictions = []
 
     # iterate over all categories and update dictionary
@@ -32,7 +33,7 @@ def main(args: argparse.Namespace) -> None:
         doc = get_clean_doc(doc)
 
         # compute n-gram statistics and update counter
-        counter = get_ngram_stats(doc, ngrams)
+        counter = get_ngram_stats(doc, ngrams_start, ngrams_end)
 
         # compute closest category
         diff_norms = get_diff_norms(counter, model)

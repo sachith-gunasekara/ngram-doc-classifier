@@ -93,7 +93,10 @@ def get_ngram_stats(
             # iterate over characters in words
             for word in words:
                 counter += Counter(
-                    [word[i : i + ngrams] for i in range(len(word) - ngrams + 1)]
+                    [
+                        word[i : i + ngrams]
+                        for i in range(max(1, len(word) - ngrams + 1))
+                    ]
                 )
 
         elif ngram_token == "char_wb":
@@ -103,7 +106,10 @@ def get_ngram_stats(
             # iterate over characters in words
             for word in doc:
                 counter += Counter(
-                    [word[i : i + ngrams] for i in range(len(word) - ngrams + 1)]
+                    [
+                        word[i : i + ngrams]
+                        for i in range(max(1, len(word) - ngrams + 1))
+                    ]
                 )
 
     elif ngram_method == "sentence":
@@ -138,8 +144,97 @@ def get_ngram_stats(
                         word = f" {word} "
 
                     counter += Counter(
-                        [word[i : i + ngrams] for i in range(len(word) - ngrams + 1)]
+                        [
+                            word[i : i + ngrams]
+                            for i in range(max(1, len(word) - ngrams + 1))
+                        ]
                     )
+
+    # return final counter
+    return counter
+
+
+def get_ngram_stats(
+    doc: str, ngrams_start: int, ngrams_end: int, ngram_method: str, ngram_token: str
+) -> typing.Counter:
+    """Gather n-gram statistics per document"""
+
+    # initialize counter
+    counter: typing.Counter = Counter()
+
+    # iterate through the range of n-grams
+    for ngrams in range(ngrams_start, ngrams_end + 1):
+        if ngram_method == "normal":
+            # clean doc
+            doc = get_clean_doc(doc)
+            # tokenize document by words
+            words = word_tokenize(doc)
+
+            if ngram_token == "word":
+                # iterate over words
+                for index in range(len(words) - ngrams + 1):
+                    counter += Counter([" ".join(words[index : index + ngrams])])
+
+            elif ngram_token == "char":
+                # iterate over characters in words
+                for word in words:
+                    counter += Counter(
+                        [
+                            word[i : i + ngrams]
+                            for i in range(max(1, len(word) - ngrams + 1))
+                        ]
+                    )
+
+            elif ngram_token == "char_wb":
+                # pad each word with a space
+                doc = [f" {word} " for word in words]
+
+                # iterate over characters in words
+                for word in doc:
+                    counter += Counter(
+                        [
+                            word[i : i + ngrams]
+                            for i in range(max(1, len(word) - ngrams + 1))
+                        ]
+                    )
+
+        elif ngram_method == "sentence":
+            if ngram_token == "word":
+                # tokenize document into sentences
+                sentences = sent_tokenize(doc)
+
+                # iterate over the characters within sentence structures
+                for sentence in sentences:
+                    sentence = get_clean_doc(sentence)
+                    words = word_tokenize(sentence)
+
+                    for index in range(len(words) - ngrams + 1):
+                        counter += Counter([" ".join(words[index : index + ngrams])])
+
+            elif ngram_token == "char_wb":
+                # tokenize into sentences
+                sentences = sent_tokenize(doc)
+
+                # iterate over the characters within sentence structures
+                for sentence in sentences:
+                    sentence = get_clean_doc(sentence)
+
+                    words = word_tokenize(sentence)
+
+                    for index, word in enumerate(words):
+                        if index == 0:
+                            word = f"{word} "
+                        elif index == len(words) - 1:
+                            word = f" {word}"
+                        else:
+                            word = f" {word} "
+
+                        counter += Counter(
+                            [
+                                word[i : i + ngrams]
+                                for i in range(max(1, len(word) - ngrams + 1))
+                            ]
+                        )
 
     # return final counter
     return counter
@@ -173,7 +268,8 @@ def main(args: argparse.Namespace) -> None:
     model: dict = {}
     model["config"] = {}
     model["profiles"] = {}
-    model["config"]["ngrams"] = args.ngrams
+    model["config"]["ngrams_start"] = args.ngrams_start
+    model["config"]["ngrams_end"] = args.ngrams_end
     model["config"]["ngram_cutoff"] = args.ngram_cutoff
     model["config"]["ngram_method"] = args.ngram_method
     model["config"]["ngram_token"] = args.ngram_token
@@ -190,7 +286,11 @@ def main(args: argparse.Namespace) -> None:
         # compute n-gram statistics and update counter
         for doc in data_subset:
             local_counter += get_ngram_stats(
-                doc, args.ngrams, args.ngram_method, args.ngram_token
+                doc,
+                args.ngrams_start,
+                args.ngrams_end,
+                args.ngram_method,
+                args.ngram_token,
             )
 
         # truncate counter
@@ -203,8 +303,9 @@ def main(args: argparse.Namespace) -> None:
         model["profiles"][unique_label] = dict(local_counter)
 
     # create model and and path
-    model_name = "model_%s_%s_%s_%s.json" % (
-        args.ngrams,
+    model_name = "model_%s_to_%s_%s_%s_%s.json" % (
+        args.ngrams_start,
+        args.ngrams_end,
         args.ngram_cutoff,
         args.ngram_method,
         args.ngram_token,
@@ -238,10 +339,16 @@ if __name__ == "__main__":
         help="Directory to dump models and logs",
     )
     parser.add_argument(
-        "--ngrams",
+        "--ngrams-start",
         type=int,
         default=3,
-        help="N-grams to use for category profiles",
+        help="N-grams start length (default: 3)",
+    )
+    parser.add_argument(
+        "--ngrams-end",
+        type=int,
+        default=3,
+        help="N-grams end length (default: 3)",
     )
     parser.add_argument(
         "--ngram-cutoff",
